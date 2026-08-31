@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             msgValidacion.textContent = '';
         } else {
             btnIngresar.disabled = true;
-            msgValidacion.textContent = 'Complete usuario y contraseña para continuar.';
+            msgValidacion.textContent = 'Completá usuario y contraseña para continuar.';
         }
     }
 

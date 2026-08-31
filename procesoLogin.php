@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Credenciales válidas (fijas, según consigna del TP)
 $usuarioValido    = "fcytuader";
@@ -26,10 +28,12 @@ if ($usuario === $usuarioValido && $contrasena === $contrasenaValida) {
 
     include 'includes/header.php';
     ?>
-    <main class="login-container">
-        <p class="mensaje exito">Ingreso correctamente</p>
-        <p>Bienvenido/a, <?php echo htmlspecialchars($usuario); ?>.</p>
-        <a href="index.php" class="btn-volver">Volver al inicio</a>
+    <main class="hero hero-result">
+        <div class="login-card">
+            <p class="mensaje exito">ingreso correctamente</p>
+            <p class="resultado-texto">Bienvenido/a, <?php echo htmlspecialchars($usuario); ?>.</p>
+            <a href="index.php" class="btn-volver">Volver al inicio</a>
+        </div>
     </main>
     <?php
     include 'includes/footer.php';

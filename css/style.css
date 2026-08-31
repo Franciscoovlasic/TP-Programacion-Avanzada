@@ -1,154 +1,364 @@
-/* style.css */
+/* ==========================================================
+   FORJA GYM — style.css
+   Paleta: charcoal + óxido de hierro (rojo-naranja "forjado")
+   Tipografía: Anton (display) + Inter (texto)
+   ========================================================== */
+
+:root {
+    --bg-primary:     #15171b;
+    --bg-panel:       #1d2026;
+    --bg-panel-alt:   #23262d;
+    --border:         #2a2e36;
+
+    --accent:         #d6472c;
+    --accent-hover:   #b93a22;
+
+    --text-primary:   #f2efe9;
+    --text-muted:     #8b909b;
+
+    --success:        #4caf6d;
+    --error:           #e5484d;
+
+    --font-display: 'Anton', Impact, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+    --radius: 6px;
+}
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #f2f4f7;
-    color: #222;
+    background-color: var(--bg-primary);
+    background-image:
+        repeating-linear-gradient(135deg,
+            rgba(255, 255, 255, 0.015) 0px,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px,
+            transparent 26px);
+    color: var(--text-primary);
+    font-family: var(--font-body);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* ---------- Header ---------- */
 .site-header {
-    background-color: #1f2a44;
-    color: #fff;
-    padding: 16px 24px;
-    display: flex;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: inline-flex;
     align-items: center;
     gap: 12px;
 }
 
-.site-header .logo {
-    width: 40px;
-    height: 40px;
+.brand-mark {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
 }
 
-.site-header h1 {
-    font-size: 1.3rem;
-    font-weight: 600;
+.brand-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
 }
 
-/* ---------- Contenido ---------- */
-.content-wrapper {
+.brand-name strong {
+    color: var(--accent);
+    font-weight: normal;
+}
+
+/* ---------- Hero / contenido principal ---------- */
+.hero {
     flex: 1;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
-    justify-content: center;
-    padding: 40px 16px;
-}
-
-.login-container {
-    background-color: #fff;
-    padding: 32px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    gap: 48px;
+    max-width: 1100px;
     width: 100%;
-    max-width: 360px;
-    text-align: center;
+    margin: 0 auto;
+    padding: 56px 40px;
 }
 
-.login-container h2 {
-    margin-bottom: 20px;
-    color: #1f2a44;
+.hero-result {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.hero-content {
+    max-width: 440px;
+}
+
+.hero-media {
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 32px;
+
+    /* ==========================================================
+       PARA USAR TU PROPIA FOTO DE FONDO EN VEZ DE LA ILUSTRACIÓN:
+       1. Copiá tu imagen en img/ (ej: img/fondo-gimnasio.jpg)
+       2. Descomentá las siguientes 3 líneas y ajustá el nombre
+       ========================================================== */
+    /* background-image: url('../img/fondo-gimnasio.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+}
+
+.hero-media svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+}
+
+.hero-text {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 38ch;
+}
+
+/* ---------- Tarjeta de login ---------- */
+.login-card {
+    position: relative;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+
+    animation: entrada-tarjeta 0.5s ease-out;
+}
+
+.login-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--accent);
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+@keyframes entrada-tarjeta {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-card {
+        animation: none;
+    }
+}
+
+.login-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 24px;
 }
 
 .form-group {
-    text-align: left;
-    margin-bottom: 16px;
+    margin-bottom: 22px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #c7cbd1;
-    border-radius: 4px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
     font-size: 1rem;
+    padding: 8px 2px;
+    transition: border-color 0.2s ease;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #1f2a44;
+    border-bottom-color: var(--accent);
+}
+
+.form-group input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
 }
 
 .mensaje-validacion {
     display: block;
     min-height: 18px;
     font-size: 0.8rem;
-    color: #b3261e;
-    margin-bottom: 12px;
+    color: var(--error);
+    margin: -8px 0 16px;
 }
 
 button#btnIngresar {
     width: 100%;
-    padding: 12px;
-    background-color: #1f2a44;
-    color: #fff;
+    padding: 13px;
+    background-color: var(--accent);
+    color: var(--text-primary);
     border: none;
     border-radius: 4px;
+    font-family: var(--font-body);
+    font-weight: 600;
     font-size: 1rem;
+    letter-spacing: 0.02em;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
+}
+
+button#btnIngresar:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+}
+
+button#btnIngresar:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 3px;
 }
 
 button#btnIngresar:disabled {
-    background-color: #a9adb4;
+    background-color: var(--bg-panel-alt);
+    color: var(--text-muted);
     cursor: not-allowed;
 }
 
-button#btnIngresar:not(:disabled):hover {
-    background-color: #33436b;
-}
-
+/* ---------- Mensajes de estado ---------- */
 .mensaje {
-    padding: 10px;
+    padding: 10px 14px;
     border-radius: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
     font-weight: 600;
 }
 
 .mensaje.error {
-    background-color: #fbe9e7;
-    color: #b3261e;
+    background-color: rgba(229, 72, 77, 0.12);
+    color: var(--error);
+    border: 1px solid rgba(229, 72, 77, 0.35);
 }
 
 .mensaje.exito {
-    background-color: #e6f4ea;
-    color: #1e7e34;
+    background-color: rgba(76, 175, 109, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(76, 175, 109, 0.35);
+    text-align: center;
+    text-transform: lowercase;
+}
+
+.resultado-texto {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 20px;
 }
 
 .btn-volver {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 10px 20px;
-    background-color: #1f2a44;
-    color: #fff;
-    text-decoration: none;
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background-color: var(--bg-panel-alt);
+    border: 1px solid var(--border);
     border-radius: 4px;
+    transition: border-color 0.2s ease;
 }
 
 .btn-volver:hover {
-    background-color: #33436b;
+    border-color: var(--accent);
 }
 
 /* ---------- Footer ---------- */
 .site-footer {
-    background-color: #1f2a44;
-    color: #cfd3da;
-    text-align: center;
-    padding: 12px;
+    border-top: 1px solid var(--border);
+    padding: 18px 40px;
+    color: var(--text-muted);
     font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.footer-divider {
+    opacity: 0.5;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 24px;
+        gap: 32px;
+    }
+
+    .hero-content {
+        order: 2;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-media {
+        margin: 0 auto 24px;
+        max-width: 280px;
+    }
+
+    .login-card {
+        order: 1;
+        margin: 0 auto;
+    }
+
+    .hero-text {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-media {
+        display: none;
+    }
+
+    .site-header,
+    .site-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
