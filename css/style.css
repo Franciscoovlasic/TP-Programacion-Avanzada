@@ -1,0 +1,154 @@
+/* style.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f2f4f7;
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+    background-color: #1f2a44;
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-header .logo {
+    width: 40px;
+    height: 40px;
+}
+
+.site-header h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* ---------- Contenido ---------- */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #1f2a44;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c7cbd1;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1f2a44;
+}
+
+.mensaje-validacion {
+    display: block;
+    min-height: 18px;
+    font-size: 0.8rem;
+    color: #b3261e;
+    margin-bottom: 12px;
+}
+
+button#btnIngresar {
+    width: 100%;
+    padding: 12px;
+    background-color: #1f2a44;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button#btnIngresar:disabled {
+    background-color: #a9adb4;
+    cursor: not-allowed;
+}
+
+button#btnIngresar:not(:disabled):hover {
+    background-color: #33436b;
+}
+
+.mensaje {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.mensaje.error {
+    background-color: #fbe9e7;
+    color: #b3261e;
+}
+
+.mensaje.exito {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+}
+
+.btn-volver {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 20px;
+    background-color: #1f2a44;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn-volver:hover {
+    background-color: #33436b;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+    background-color: #1f2a44;
+    color: #cfd3da;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.8rem;
+}
