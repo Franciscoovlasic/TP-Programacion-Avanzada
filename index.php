@@ -8,6 +8,12 @@ if (isset($_SESSION['usuario'])) {
 }
 $token = bin2hex(random_bytes(32));
 $_SESSION['token'] = $token;
+$captchaAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+$captchaCode = '';
+for ($i = 0; $i < 6; $i++) {
+    $captchaCode .= $captchaAlphabet[random_int(0, strlen($captchaAlphabet) - 1)];
+}
+$_SESSION['captcha_code'] = $captchaCode;
 include 'includes/header.php';
 ?>
 
@@ -38,7 +44,10 @@ include 'includes/header.php';
 
             <?php
             if (isset($_SESSION['error'])) {
-                echo '<p class="mensaje error">' . htmlspecialchars($_SESSION['error']) . '</p>';
+                $errores = is_array($_SESSION['error']) ? $_SESSION['error'] : [$_SESSION['error']];
+                foreach ($errores as $error) {
+                    echo '<p class="mensaje error">' . htmlspecialchars((string) $error, ENT_QUOTES, 'UTF-8') . '</p>';
+                }
                 unset($_SESSION['error']);
             }
             ?>
@@ -53,6 +62,12 @@ include 'includes/header.php';
                 <div class="form-group">
                     <label for="contrasena">Contraseña</label>
                     <input type="password" id="contrasena" name="contrasena" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="captcha">Código de verificación</label>
+                    <img src="<?= htmlspecialchars('captcha.php', ENT_QUOTES, 'UTF-8') ?>" alt="CAPTCHA visual">
+                    <input type="text" id="captcha" name="captcha" maxlength="6" autocomplete="off">
                 </div>
 
                 <span id="msgValidacion" class="mensaje-validacion"></span>

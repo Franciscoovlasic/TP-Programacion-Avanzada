@@ -57,8 +57,13 @@ a {
 
 /* ---------- Header ---------- */
 .site-header {
+    width: 100%;
     padding: 20px 40px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
 }
 
 .brand {
@@ -83,6 +88,93 @@ a {
 .brand-name strong {
     color: var(--accent);
     font-weight: normal;
+}
+
+.session-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    margin-left: auto;
+    padding-top: 4px;
+    text-align: right;
+}
+
+.session-status__user {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.session-status__form {
+    position: relative;
+    margin: 0;
+}
+
+.session-status__logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.logout-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #fff;
+    cursor: pointer;
+    transition: stroke 0.15s ease, color 0.15s ease;
+}
+
+.logout-icon * {
+    fill: none;
+    stroke: #fff;
+    transition: stroke 0.15s ease, color 0.15s ease;
+}
+
+.logout-icon:hover,
+.logout-icon:hover * {
+    stroke: var(--error);
+}
+
+.session-status__logout:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 3px;
+}
+
+.logout-tooltip {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 8px);
+    z-index: 10;
+    padding: 4px 7px;
+    border-radius: 3px;
+    background: #171717;
+    color: #fff;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50%);
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.session-status__logout:hover + .logout-tooltip,
+.session-status__logout:focus-visible + .logout-tooltip {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ---------- Hero / contenido principal ---------- */
@@ -360,5 +452,13 @@ button#btnIngresar:disabled {
     .site-footer {
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+    .site-header {
+        gap: 12px;
+    }
+
+    .session-status__user {
+        font-size: 0.75rem;
     }
 }
