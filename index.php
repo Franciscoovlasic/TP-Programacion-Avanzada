@@ -6,6 +6,8 @@ if (isset($_SESSION['usuario'])) {
     header('Location: inicio.php');
     exit;
 }
+$token = bin2hex(random_bytes(32));
+$_SESSION['token'] = $token;
 include 'includes/header.php';
 ?>
 
@@ -42,6 +44,7 @@ include 'includes/header.php';
             ?>
 
             <form id="loginForm" action="procesoLogin.php" method="POST" novalidate>
+                <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>">
                 <div class="form-group">
                     <label for="usuario">Usuario</label>
                     <input type="text" id="usuario" name="usuario" autocomplete="off">

@@ -3,6 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (
+    !isset($_POST['token']) ||
+    !is_string($_POST['token']) ||
+    !isset($_SESSION['token']) ||
+    !is_string($_SESSION['token']) ||
+    !hash_equals($_SESSION['token'], $_POST['token'])
+) {
+    $_SESSION['error'] = "Token de seguridad inválido o ausente.";
+    header("Location: index.php");
+    exit;
+}
+
+unset($_SESSION['token']);
+
 // Credenciales válidas (fijas, según consigna del TP)
 $usuarioValido    = "fcytuader";
 $contrasenaValida = "programacionavanzada";
