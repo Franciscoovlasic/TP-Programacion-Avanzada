@@ -1,8 +1,8 @@
 Trabajo Práctico N°1 - Programación Avanzada
-
-Nombre del grupo: [COMPLETAR]
+Grupo 6
 
 Integrantes:
-- [Apellido, Nombre - Legajo]
-- [Apellido, Nombre - Legajo]
-- [Apellido, Nombre - Legajo]
+- Cacholatti, Bárbara
+- Martin, Mariano
+- Vlasic, Francisco
+- Zeballos, Bruno

@@ -23,4 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <img src="img/logo.png" alt="Logo FORJA GYM" class="brand-mark">
             <span class="brand-name">FORJA <strong>GYM</strong></span>
         </a>
+        <?php if (isset($_SESSION['usuario'])): ?>
+            <span>Logueado como: <?php echo htmlspecialchars($_SESSION['usuario'], ENT_QUOTES, 'UTF-8'); ?></span>
+        <?php endif; ?>
     </header>

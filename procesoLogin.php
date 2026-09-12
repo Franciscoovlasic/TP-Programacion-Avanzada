@@ -25,18 +25,11 @@ if ($usuario === '' || $contrasena === '') {
 
 // Comprobación de usuario y contraseña
 if ($usuario === $usuarioValido && $contrasena === $contrasenaValida) {
+    session_regenerate_id(true);
+    $_SESSION['usuario'] = $usuario;
 
-    include 'includes/header.php';
-    ?>
-    <main class="hero hero-result">
-        <div class="login-card">
-            <p class="mensaje exito">ingreso correctamente</p>
-            <p class="resultado-texto">Bienvenido/a, <?php echo htmlspecialchars($usuario); ?>.</p>
-            <a href="index.php" class="btn-volver">Volver al inicio</a>
-        </div>
-    </main>
-    <?php
-    include 'includes/footer.php';
+    header('Location: inicio.php');
+    exit;
 
 } else {
     // Usuario o contraseña incorrectos: se informa y se vuelve al form inicial
