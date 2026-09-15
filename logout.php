@@ -7,5 +7,5 @@ $_SESSION = [];
 session_unset();
 session_destroy();
 
-header('Location: index.php');
+header('Location: form.php');
 exit;

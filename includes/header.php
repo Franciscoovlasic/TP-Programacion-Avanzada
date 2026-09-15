@@ -19,7 +19,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
 
     <header class="site-header">
-        <a href="index.php" class="brand">
+        <a href="form.php" class="brand">
             <img src="img/logo.png" alt="Logo FORJA GYM" class="brand-mark">
             <span class="brand-name">FORJA <strong>GYM</strong></span>
         </a>
