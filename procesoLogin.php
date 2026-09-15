@@ -37,7 +37,7 @@ $contrasenaValida = "programacionavanzada";
 
 // Solo se procesa si llega por POST
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    header("Location: form.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -54,7 +54,7 @@ if ($usuario === '' || $contrasena === '') {
 
 if ($errores !== []) {
     $_SESSION['error'] = $errores;
-    header("Location: form.php");
+    header("Location: index.php");
     exit;
 }
 
