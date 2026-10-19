@@ -43,6 +43,11 @@ include 'includes/header.php';
             <h1 class="login-title">Acceder</h1>
 
             <?php
+            if (isset($_SESSION['exito'])) {
+                echo '<p class="mensaje exito">' . htmlspecialchars((string) $_SESSION['exito'], ENT_QUOTES, 'UTF-8') . '</p>';
+                unset($_SESSION['exito']);
+            }
+
             if (isset($_SESSION['error'])) {
                 $errores = is_array($_SESSION['error']) ? $_SESSION['error'] : [$_SESSION['error']];
                 foreach ($errores as $error) {
@@ -74,6 +79,8 @@ include 'includes/header.php';
 
                 <button type="submit" id="btnIngresar" disabled>Ingresar</button>
             </form>
+
+            <a class="btn-registro" href="registro.php">Crear una cuenta</a>
         </div>
 
     </main>

@@ -51,7 +51,7 @@ if ($errores === []) {
     try {
         $conexion = conectarBaseDeDatos();
         $consulta = $conexion->prepare(
-            'SELECT id_usuario, nombre, dni, password FROM usuario WHERE dni = ? LIMIT 1'
+            'SELECT id_usuario, nombre, dni, contrasenia FROM usuario WHERE dni = ? LIMIT 1'
         );
 
         if ($consulta === false) {
