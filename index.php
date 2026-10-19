@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-if (isset($_SESSION['usuario'])) {
+if (isset($_SESSION['id_usuario'])) {
     header('Location: inicio.php');
     exit;
 }
@@ -55,8 +55,8 @@ include 'includes/header.php';
             <form id="loginForm" action="procesoLogin.php" method="POST" novalidate>
                 <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>">
                 <div class="form-group">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" autocomplete="off">
+                    <label for="dni">DNI</label>
+                    <input type="text" id="dni" name="dni" autocomplete="username">
                 </div>
 
                 <div class="form-group">

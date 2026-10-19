@@ -31,41 +31,69 @@ if ($captchaInput === '' || $captchaCode === '' || !hash_equals($captchaCode, $c
 
 unset($_SESSION['captcha_code']);
 
-// Credenciales válidas (fijas, según consigna del TP)
-$usuarioValido    = "fcytuader";
-$contrasenaValida = "programacionavanzada";
-
 // Solo se procesa si llega por POST
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header("Location: index.php");
     exit;
 }
 
-$usuario    = isset($_POST['usuario']) && is_string($_POST['usuario']) ? trim($_POST['usuario']) : '';
-$contrasena = isset($_POST['contrasena']) && is_string($_POST['contrasena']) ? trim($_POST['contrasena']) : '';
+$dni = isset($_POST['dni']) && is_string($_POST['dni']) ? trim($_POST['dni']) : '';
+$contrasena = isset($_POST['contrasena']) && is_string($_POST['contrasena']) ? $_POST['contrasena'] : '';
 
 // Validación server-side: nunca confiar solo en la validación de JS
-if ($usuario === '' || $contrasena === '') {
-    $errores[] = "Debe completar usuario y contraseña.";
-} elseif ($usuario !== $usuarioValido || $contrasena !== $contrasenaValida) {
-    // Usuario o contraseña incorrectos: se informa y se vuelve al form inicial
-    $errores[] = "Usuario o contraseña incorrectos.";
+if ($dni === '' || $contrasena === '') {
+    $errores[] = 'DNI o contraseña incorrectos.';
+}
+
+if ($errores === []) {
+    require_once __DIR__ . '/includes/conexion.php';
+
+    try {
+        $conexion = conectarBaseDeDatos();
+        $consulta = $conexion->prepare(
+            'SELECT id_usuario, nombre, dni, password FROM usuario WHERE dni = ? LIMIT 1'
+        );
+
+        if ($consulta === false) {
+            throw new RuntimeException('No se pudo preparar la consulta de autenticación.');
+        }
+
+        $consulta->bind_param('s', $dni);
+        if (!$consulta->execute()) {
+            $consulta->close();
+            $conexion->close();
+            throw new RuntimeException('No se pudo ejecutar la consulta de autenticación.');
+        }
+        $consulta->bind_result($idUsuario, $nombre, $dniRegistrado, $hashPassword);
+
+        $usuarioEncontrado = $consulta->fetch();
+        $consulta->close();
+        $conexion->close();
+
+        if (!$usuarioEncontrado || !password_verify($contrasena, $hashPassword)) {
+            $errores[] = 'DNI o contraseña incorrectos.';
+        } else {
+            session_regenerate_id(true);
+            $_SESSION['id_usuario'] = (int) $idUsuario;
+            $_SESSION['dni'] = $dniRegistrado;
+            $_SESSION['nombre'] = $nombre;
+            unset($_SESSION['error']);
+
+            header('Location: inicio.php');
+            exit;
+        }
+    } catch (RuntimeException $exception) {
+        error_log($exception->getMessage());
+        $errores[] = 'El servicio no está disponible en este momento.';
+    } catch (mysqli_sql_exception $exception) {
+        error_log($exception->getMessage());
+        $errores[] = 'El servicio no está disponible en este momento.';
+    }
 }
 
 if ($errores !== []) {
     $_SESSION['error'] = $errores;
     header("Location: index.php");
     exit;
-}
-
-// Comprobación de usuario y contraseña
-if ($usuario === $usuarioValido && $contrasena === $contrasenaValida) {
-    session_regenerate_id(true);
-    $_SESSION['usuario'] = $usuario;
-    unset($_SESSION['error']);
-
-    header('Location: inicio.php');
-    exit;
-
 }
 ?>

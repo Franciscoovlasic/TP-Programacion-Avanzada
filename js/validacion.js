@@ -1,29 +1,29 @@
 // validacion.js
-// Valida que usuario y contraseña no estén vacíos.
+// Valida que DNI y contraseña no estén vacíos.
 // Recién ahí se habilita el botón de envío del formulario.
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    const inputUsuario = document.getElementById('usuario');
+    const inputDni = document.getElementById('dni');
     const inputContrasena = document.getElementById('contrasena');
     const btnIngresar = document.getElementById('btnIngresar');
     const msgValidacion = document.getElementById('msgValidacion');
 
     function validarCampos() {
-        const usuarioCompleto = inputUsuario.value.trim() !== '';
-        const contrasenaCompleta = inputContrasena.value.trim() !== '';
+        const dniCompleto = inputDni.value.trim() !== '';
+        const contrasenaCompleta = inputContrasena.value !== '';
 
-        if (usuarioCompleto && contrasenaCompleta) {
+        if (dniCompleto && contrasenaCompleta) {
             btnIngresar.disabled = false;
             msgValidacion.textContent = '';
         } else {
             btnIngresar.disabled = true;
-            msgValidacion.textContent = 'Completá usuario y contraseña para continuar.';
+            msgValidacion.textContent = 'Completá DNI y contraseña para continuar.';
         }
     }
 
     // Se valida en cada tecla presionada en ambos campos
-    inputUsuario.addEventListener('input', validarCampos);
+    inputDni.addEventListener('input', validarCampos);
     inputContrasena.addEventListener('input', validarCampos);
 
     // Estado inicial (por si el navegador autocompleta los campos)
