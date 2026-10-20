@@ -14,5 +14,5 @@ function h($v){return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-8');}
 echo '<p class="resultado-texto">Historial de <strong>'.h($alumno['nombre']).'</strong></p>';
 if(!$rutinas){echo '<p>Este alumno todavía no tiene rutinas.</p>';exit;}
 echo '<div class="tabla-contenedor"><table class="tabla-catalogo"><thead><tr><th>Rutina</th><th>Fecha</th><th>Descripción</th><th>Acción</th></tr></thead><tbody>';
-foreach($rutinas as $r){echo '<tr><td>'.h($r['nombre_rutina']).'</td><td>'.h(date('d/m/Y',strtotime($r['fecha_creacion']))).'</td><td>'.h($r['descripcion']??'').'</td><td><a class="btn-secundario" href="rutinas/constructor.php?id='.(int)$r['id_rutina'].'">Ver / editar</a></td></tr>';}
+foreach($rutinas as $r){echo '<tr><td>'.h($r['nombre_rutina']).'</td><td>'.h(date('d/m/Y',strtotime($r['fecha_creacion']))).'</td><td>'.h($r['descripcion']??'').'</td><td><a class="btn-secundario btn-sm" href="rutinas/constructor.php?id='.(int)$r['id_rutina'].'">Ver / editar</a></td></tr>';}
 echo '</tbody></table></div>';

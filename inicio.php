@@ -18,9 +18,9 @@ include 'includes/header.php';
         <p class="resultado-texto">Rol: <strong><?= htmlspecialchars($_SESSION['rol'], ENT_QUOTES, 'UTF-8') ?></strong></p>
         <nav aria-label="Áreas disponibles">
             <?php if ($_SESSION['rol'] === 'ADMIN'): ?>
-                <a class="btn-registro" href="admin/index.php">Ir al área ADMIN</a>
+                <a class="btn-primario" href="admin/index.php">Ir al área ADMIN</a>
             <?php elseif ($_SESSION['rol'] === 'USUARIO'): ?>
-                <a class="btn-registro" href="usuario/index.php">Ir al área de usuario</a>
+                <a class="btn-primario" href="usuario/index.php">Ir al área de usuario</a>
             <?php endif; ?>
         </nav>
     </div>

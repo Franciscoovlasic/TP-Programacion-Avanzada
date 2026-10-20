@@ -8,6 +8,7 @@
     --bg-primary:     #15171b;
     --bg-panel:       #1d2026;
     --bg-panel-alt:   #23262d;
+    --bg-panel-hover: #2c3039;
     --border:         #2a2e36;
 
     --accent:         #d6472c;
@@ -18,6 +19,8 @@
 
     --success:        #4caf6d;
     --error:           #e5484d;
+    --error-hover:    #c93a3f;
+    --error-text:     #ff8a8e;
 
     --font-display: 'Anton', Impact, sans-serif;
     --font-body: 'Inter', system-ui, -apple-system, sans-serif;
@@ -346,34 +349,103 @@ a {
     margin: -8px 0 16px;
 }
 
-.btn-primario {
-    width: 100%;
-    padding: 13px;
-    background-color: var(--accent);
-    color: var(--text-primary);
-    border: none;
-    border-radius: 4px;
+/* ---------- Sistema de botones ----------
+   .btn-primario   → acción principal (guardar, crear, ingresar)
+   .btn-secundario → acción secundaria (editar, ver, volver)
+   .btn-peligro    → acción destructiva (eliminar, quitar)
+   Modificadores:  .btn-auto (ancho según contenido), .btn-sm (compacto, para tablas)
+   ----------------------------------------------------------------- */
+.btn-primario,
+.btn-secundario,
+.btn-peligro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
     font-family: var(--font-body);
-    font-weight: 600;
     font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
     letter-spacing: 0.02em;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease,
+                color 0.2s ease, transform 0.1s ease;
 }
 
-.btn-primario:hover:not(:disabled) {
-    background-color: var(--accent-hover);
+.btn-primario:active:not(:disabled),
+.btn-secundario:active:not(:disabled),
+.btn-peligro:active:not(:disabled) {
+    transform: translateY(1px);
 }
 
-.btn-primario:focus-visible {
+.btn-primario:focus-visible,
+.btn-secundario:focus-visible,
+.btn-peligro:focus-visible {
     outline: 2px solid var(--text-primary);
     outline-offset: 3px;
 }
 
-.btn-primario:disabled {
+.btn-primario:disabled,
+.btn-secundario:disabled,
+.btn-peligro:disabled {
     background-color: var(--bg-panel-alt);
+    border-color: var(--border);
     color: var(--text-muted);
     cursor: not-allowed;
+}
+
+/* Primario: por defecto ocupa todo el ancho (login/registro); usar .btn-auto en el resto */
+.btn-primario {
+    width: 100%;
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--text-primary);
+}
+
+.btn-primario:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+/* Secundario: botón neutro con borde, resalta en acento al pasar el mouse */
+.btn-secundario {
+    background-color: var(--bg-panel-alt);
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+
+.btn-secundario:hover:not(:disabled) {
+    background-color: var(--bg-panel-hover);
+    border-color: var(--accent);
+}
+
+/* Peligro: tinte rojo suave en reposo; se rellena al pasar el mouse para confirmar la intención */
+.btn-peligro {
+    background-color: rgba(229, 72, 77, 0.12);
+    border-color: rgba(229, 72, 77, 0.5);
+    color: var(--error-text);
+}
+
+.btn-peligro:hover:not(:disabled) {
+    background-color: var(--error-hover);
+    border-color: var(--error-hover);
+    color: #fff;
+}
+
+.btn-auto {
+    width: auto;
+}
+
+.btn-sm {
+    min-height: 36px;
+    padding: 6px 14px;
+    font-size: 0.875rem;
 }
 
 .catalogo-panel {
@@ -388,8 +460,10 @@ a {
 .tabla-catalogo { width: 100%; border-collapse: collapse; text-align: left; }
 .tabla-catalogo th, .tabla-catalogo td { padding: 14px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
 .tabla-catalogo th { color: var(--accent); }
-.acciones-catalogo { display: flex; gap: 8px; flex-wrap: wrap; }
+.acciones-catalogo { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .acciones-catalogo form { margin: 0; }
+.tabla-catalogo td .btn-sm { white-space: nowrap; }
+.acciones-agregar { margin: 0 0 8px; }
 
 /* DataTables: controles adaptados al tema oscuro */
 .dt-container { color: var(--text-primary); margin: 24px 0; }
@@ -419,9 +493,6 @@ a {
 table.dataTable.tabla-catalogo thead th { color: var(--accent); }
 table.dataTable.tabla-catalogo tbody tr,
 table.dataTable.tabla-catalogo tbody td { background: transparent; }
-.btn-secundario, .btn-peligro { display: inline-block; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; cursor: pointer; font: inherit; }
-.btn-secundario { color: var(--text-primary); background: var(--bg-panel-alt); }
-.btn-peligro { color: var(--text-primary); background: var(--error); border-color: var(--error); }
 
 .btn-registro {
     display: block;
@@ -553,7 +624,7 @@ table.dataTable.tabla-catalogo tbody td { background: transparent; }
 /* Panel de alumnos y constructor de rutinas: conserva la paleta original. */
 .admin-alumnos-panel { width: min(100%, 1500px); }
 .admin-alumnos-panel .tabla-catalogo { min-width: 1050px; }
-.admin-btn { display: inline-block; text-decoration: none; padding: 10px 14px; border-radius: var(--radius); font-weight: 600; }
+.admin-btn { width: auto; }
 .admin-links, .constructor-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 24px; }
 .constructor-panel { width: min(100%, 1050px); }
 .constructor-heading, .dia-card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
@@ -568,7 +639,13 @@ table.dataTable.tabla-catalogo tbody td { background: transparent; }
 .modal-overlay { display: none; position: fixed; z-index: 1000; inset: 0; padding: 24px; background: rgba(0,0,0,.72); align-items: center; justify-content: center; }
 .modal-overlay.visible { display: flex; }
 .modal-card { position: relative; width: min(100%, 1050px); max-height: 85vh; overflow: auto; padding: 30px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-panel); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
-.modal-cerrar { position: absolute; right: 16px; top: 10px; border: 0; background: transparent; color: var(--text-primary); font-size: 30px; cursor: pointer; }
+.modal-cerrar { position: absolute; right: 12px; top: 12px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid transparent; border-radius: var(--radius); background: transparent; color: var(--text-muted); font-size: 1.75rem; line-height: 1; cursor: pointer; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.modal-cerrar:hover { background: var(--bg-panel-alt); border-color: var(--border); color: var(--text-primary); }
+.modal-cerrar:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.constructor-actions .btn-primario { width: auto; }
+.dia-card-head .btn-peligro { align-self: flex-end; margin-bottom: 8px; }
+.dia-card > .agregar-ejercicio { margin-top: 12px; }
+.quitar-ejercicio { width: 40px; min-height: 40px; padding: 0; font-size: 1.25rem; margin-bottom: 8px; }
 @media (max-width: 760px) { .ejercicio-editor { grid-template-columns: 1fr 1fr; } .ejercicio-select { grid-column: 1 / -1; } .dia-card-head { align-items: flex-start; } .modal-card { padding: 22px 14px; } }
 
 

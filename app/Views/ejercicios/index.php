@@ -7,7 +7,7 @@ include __DIR__ . '/../../../includes/header.php';
         <p class="resultado-texto">Administrá los ejercicios reutilizables para las rutinas.</p>
         <?php if ($mensaje): ?><p class="mensaje exito"><?= e($mensaje) ?></p><?php endif; ?>
         <?php if ($error): ?><p class="mensaje error"><?= e($error) ?></p><?php endif; ?>
-        <p><a class="btn-registro" href="nuevo.php">Agregar ejercicio</a></p>
+        <p class="acciones-agregar"><a class="btn-primario btn-auto" href="nuevo.php">+ Agregar ejercicio</a></p>
         <?php if ($ejercicios === [] && !$error): ?><p class="resultado-texto">Todavía no hay ejercicios cargados.</p><?php endif; ?>
         <div class="tabla-contenedor">
             <table class="tabla-catalogo tabla-datatable">
@@ -16,13 +16,15 @@ include __DIR__ . '/../../../includes/header.php';
                 <?php foreach ($ejercicios as $ejercicio): ?>
                     <tr>
                         <td><?= e($ejercicio['nombre_ejercicio']) ?></td>
-                        <td class="acciones-catalogo">
-                            <a class="btn-secundario" href="editar.php?id=<?= (int) $ejercicio['id_ejercicio'] ?>">Modificar</a>
-                            <form action="eliminar.php" method="post">
-                                <input type="hidden" name="token" value="<?= e($token) ?>">
-                                <input type="hidden" name="id_ejercicio" value="<?= (int) $ejercicio['id_ejercicio'] ?>">
-                                <button class="btn-peligro" type="submit">Eliminar</button>
-                            </form>
+                        <td>
+                            <div class="acciones-catalogo">
+                                <a class="btn-secundario btn-sm" href="editar.php?id=<?= (int) $ejercicio['id_ejercicio'] ?>">Modificar</a>
+                                <form action="eliminar.php" method="post">
+                                    <input type="hidden" name="token" value="<?= e($token) ?>">
+                                    <input type="hidden" name="id_ejercicio" value="<?= (int) $ejercicio['id_ejercicio'] ?>">
+                                    <button class="btn-peligro btn-sm" type="submit">Eliminar</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

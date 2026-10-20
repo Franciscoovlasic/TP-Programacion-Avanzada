@@ -13,7 +13,7 @@ include __DIR__ . '/../includes/header.php';
             <a class="alumno-tab activo" href="perfil.php"><span class="tab-icon">◉</span><span><strong>Mi perfil</strong><small>Tus datos personales</small></span></a>
             <a class="alumno-tab" href="rutinas.php"><span class="tab-icon">▤</span><span><strong>Mi rutina</strong><small>Rutina actual e historial</small></span></a>
         </nav>
-        <div class="alumno-atajos"><a class="btn-secundario" href="perfil.php">Editar mi perfil</a><a class="btn-registro" href="rutinas.php">Ver mi rutina actual</a></div>
+        <div class="alumno-atajos"><a class="btn-secundario" href="perfil.php">Editar mi perfil</a><a class="btn-primario btn-auto" href="rutinas.php">Ver mi rutina actual</a></div>
     </section>
 </main>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

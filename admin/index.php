@@ -35,15 +35,15 @@ include __DIR__ . '/../includes/header.php';
             <td><?= e($a['nombre']) ?></td><td><?= e($a['email']) ?></td>
             <td><?= e($a['nombre_rutina'] ?? 'Sin rutina') ?></td>
             <td><?= $a['fecha_creacion'] ? e(date('d/m/Y', strtotime($a['fecha_creacion']))) : '—' ?></td>
-            <td><?php if ($a['id_rutina']): ?><a class="btn-secundario" href="rutinas/constructor.php?id=<?= (int)$a['id_rutina'] ?>">Editar</a><?php else: ?><span>—</span><?php endif; ?></td>
-            <td><a class="btn-primario admin-btn" href="rutinas/constructor.php?id_usuario=<?= (int)$a['id_usuario'] ?>">+ Crear</a></td>
-            <td><button class="btn-secundario" type="button" onclick="abrirHistorial(<?= (int)$a['id_usuario'] ?>)">Ver historial</button></td>
+            <td><?php if ($a['id_rutina']): ?><a class="btn-secundario btn-sm" href="rutinas/constructor.php?id=<?= (int)$a['id_rutina'] ?>">Editar</a><?php else: ?><span>—</span><?php endif; ?></td>
+            <td><a class="btn-primario btn-sm admin-btn" href="rutinas/constructor.php?id_usuario=<?= (int)$a['id_usuario'] ?>">+ Crear</a></td>
+            <td><button class="btn-secundario btn-sm" type="button" onclick="abrirHistorial(<?= (int)$a['id_usuario'] ?>)">Ver historial</button></td>
         </tr><?php endforeach; ?>
         <?php if (!$alumnos): ?><tr><td colspan="7">No hay alumnos registrados.</td></tr><?php endif; ?></tbody>
     </table></div>
-    <div class="admin-links"><a class="btn-secundario" href="ejercicios/index.php">Administrar ejercicios</a><a class="btn-secundario" href="../inicio.php">Volver al inicio</a></div>
+    <div class="admin-links"><a class="btn-primario btn-auto" href="ejercicios/index.php">Administrar ejercicios</a><a class="btn-secundario" href="../inicio.php">Volver al inicio</a></div>
 </section></main>
-<div class="modal-overlay" id="modalHistorial" aria-hidden="true"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="historialTitulo"><button class="modal-cerrar" type="button" onclick="cerrarHistorial()" aria-label="Cerrar">×</button><h2 id="historialTitulo">Historial de rutinas</h2><div id="historialContenido">Cargando...</div></section></div>
+<div class="modal-overlay" id="modalHistorial" aria-hidden="true"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="historialTitulo"><button class="modal-cerrar" type="button" onclick="cerrarHistorial()" aria-label="Cerrar historial" title="Cerrar">×</button><h2 id="historialTitulo">Historial de rutinas</h2><div id="historialContenido">Cargando...</div></section></div>
 <script>
 async function abrirHistorial(id){const modal=document.getElementById('modalHistorial');modal.classList.add('visible');modal.setAttribute('aria-hidden','false');document.getElementById('historialContenido').textContent='Cargando...';try{const r=await fetch('rutinas/historial.php?id_usuario='+encodeURIComponent(id));if(!r.ok)throw new Error();document.getElementById('historialContenido').innerHTML=await r.text();}catch(e){document.getElementById('historialContenido').textContent='No se pudo cargar el historial.';}}
 function cerrarHistorial(){const m=document.getElementById('modalHistorial');m.classList.remove('visible');m.setAttribute('aria-hidden','true');}

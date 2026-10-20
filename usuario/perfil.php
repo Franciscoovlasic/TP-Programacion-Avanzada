@@ -55,7 +55,7 @@ include __DIR__ . '/../includes/header.php';
             <div class="form-group"><label for="peso_kg">Peso (kg)</label><input id="peso_kg" type="number" name="peso_kg" min="0.1" max="500" step="0.1" placeholder="Ej. 75.5" value="<?= e($perfil['peso_kg'] ?? '') ?>"></div>
             <div class="form-group"><label for="altura_cm">Altura (cm)</label><input id="altura_cm" type="number" name="altura_cm" min="1" max="300" step="0.1" placeholder="Ej. 175" value="<?= e($perfil['altura_cm'] ?? '') ?>"></div>
         </div>
-        <div class="perfil-actions"><button class="btn-registro" type="submit">Guardar cambios</button><a class="btn-secundario" href="index.php">Volver</a></div>
+        <div class="perfil-actions"><button class="btn-primario btn-auto" type="submit">Guardar cambios</button><a class="btn-secundario" href="index.php">Volver</a></div>
     </form>
 </section></main>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
