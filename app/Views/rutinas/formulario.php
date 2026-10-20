@@ -12,7 +12,7 @@ include __DIR__ . '/../../../includes/header.php';
             <select id="id_usuario" name="id_usuario" required>
                 <option value="">Seleccioná un usuario</option>
                 <?php foreach ($usuarios as $usuario): ?>
-                    <option value="<?= (int) $usuario['id_usuario'] ?>" <?= (int) ($rutina['id_usuario'] ?? 0) === (int) $usuario['id_usuario'] ? 'selected' : '' ?>><?= e($usuario['nombre'] . ' (' . $usuario['dni'] . ')') ?></option>
+                    <option value="<?= (int) $usuario['id_usuario'] ?>" <?= (int) ($rutina['id_usuario'] ?? 0) === (int) $usuario['id_usuario'] ? 'selected' : '' ?>><?= e(nombreCompleto($usuario['nombre'], $usuario['apellido'] ?? '') . ' (' . $usuario['dni'] . ')') ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

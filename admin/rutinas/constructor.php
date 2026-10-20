@@ -31,7 +31,7 @@ try {
             $se->bind_param('i',$idDia);$se->execute();$re=$se->get_result();while($ex=$re->fetch_assoc())$d['ejercicios'][]=$ex;$se->close();$dias[]=$d;
         } $stmt->close();
     }
-    if ($idUsuario) { $stmt=$conexion->prepare("SELECT id_usuario,nombre FROM usuario WHERE id_usuario=? AND rol='USUARIO'");$stmt->bind_param('i',$idUsuario);$stmt->execute();$alumno=$stmt->get_result()->fetch_assoc();$stmt->close(); }
+    if ($idUsuario) { $stmt=$conexion->prepare("SELECT id_usuario,nombre,apellido FROM usuario WHERE id_usuario=? AND rol='USUARIO'");$stmt->bind_param('i',$idUsuario);$stmt->execute();$alumno=$stmt->get_result()->fetch_assoc();$stmt->close(); }
 } catch(Throwable $e) { error_log($e->getMessage()); $errores[]='No se pudieron cargar los datos. Ejecutá primero la migración 005.'; }
 
 if ($_SERVER['REQUEST_METHOD']==='POST') {
@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
     }
     // Repoblar la interfaz con lo enviado si hay errores.
     $dias=[];foreach((array)$diasPost as $d)$dias[]=['nombre_dia'=>$d['nombre_dia']??'','ejercicios'=>$d['ejercicios']??[]];
-    if($idUsuario){$stmt=$conexion->prepare("SELECT id_usuario,nombre FROM usuario WHERE id_usuario=? AND rol='USUARIO'");$stmt->bind_param('i',$idUsuario);$stmt->execute();$alumno=$stmt->get_result()->fetch_assoc();$stmt->close();}
+    if($idUsuario){$stmt=$conexion->prepare("SELECT id_usuario,nombre,apellido FROM usuario WHERE id_usuario=? AND rol='USUARIO'");$stmt->bind_param('i',$idUsuario);$stmt->execute();$alumno=$stmt->get_result()->fetch_assoc();$stmt->close();}
 }
 if (!$dias) $dias=[['nombre_dia'=>'Día 1','ejercicios'=>[]]];
 include __DIR__ . '/../../includes/header.php';
 ?>
 <main class="hero hero-result"><section class="catalogo-panel constructor-panel">
-<h1 class="login-title"><?= $idRutina?'Editar rutina':'Crear rutina nueva' ?></h1><p class="resultado-texto">Alumno: <strong><?= e($alumno['nombre'] ?? 'Alumno') ?></strong></p>
+<h1 class="login-title"><?= $idRutina?'Editar rutina':'Crear rutina nueva' ?></h1><p class="resultado-texto">Alumno: <strong><?= e(isset($alumno) ? nombreCompleto($alumno['nombre'] ?? '', $alumno['apellido'] ?? '') : 'Alumno') ?></strong></p>
 <?php foreach($errores as $error): ?><p class="mensaje error"><?= e($error) ?></p><?php endforeach; ?>
 <form method="post" id="formRutina"><input type="hidden" name="token" value="<?= e(tokenCsrf()) ?>"><input type="hidden" name="id_usuario" value="<?= (int)$idUsuario ?>">
 <div class="form-group"><label for="nombre_rutina">Nombre de la rutina</label><input id="nombre_rutina" name="nombre_rutina" maxlength="100" required value="<?= e($nombre) ?>"></div>

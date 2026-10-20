@@ -17,3 +17,8 @@ Para el perfil del alumno:
 - No depende del orden ni de la existencia de una columna dni.
 
 Las migraciones 005 y 006 se prepararon para poder volver a ejecutarse sin duplicar estas tablas/columnas. De todos modos, haz un backup antes de modificar la base de datos y prueba primero en una copia si la base contiene cambios propios.
+
+Para el apellido del usuario:
+- La migracion 007 agrega la columna apellido a usuario solo si falta.
+- Si la columna ya fue creada a mano, la migracion no cambia nada.
+- Los registros existentes quedan con apellido vacio hasta que se completen desde "Mi perfil".

@@ -44,12 +44,13 @@ try {
 
     $hash = password_hash(ADMIN_PASSWORD, PASSWORD_DEFAULT);
     $rol = 'ADMIN';
-    $nombre = 'Administrador FORJA GYM';
-    $insert = $db->prepare('INSERT INTO usuario (nombre, email, dni, contrasenia, rol) VALUES (?, ?, ?, ?, ?)');
+    $nombre = 'Administrador';
+    $apellido = 'FORJA GYM';
+    $insert = $db->prepare('INSERT INTO usuario (nombre, apellido, email, dni, contrasenia, rol) VALUES (?, ?, ?, ?, ?, ?)');
     if (!$insert) {
         throw new RuntimeException('No se pudo preparar la creación de la cuenta maestra.');
     }
-    $insert->bind_param('sssss', $nombre, $email, $dni, $hash, $rol);
+    $insert->bind_param('ssssss', $nombre, $apellido, $email, $dni, $hash, $rol);
     $dni = ADMIN_DNI;
     $email = ADMIN_EMAIL;
     if (!$insert->execute()) {

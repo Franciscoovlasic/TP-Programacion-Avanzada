@@ -29,7 +29,7 @@ final class Rutina extends Model
 
     private const MENSAJE_PROPIETARIO_INEXISTENTE = 'El usuario propietario no existe.';
 
-    private const SELECT_CON_PROPIETARIO = 'SELECT r.id_rutina, r.id_usuario, r.nombre_rutina, r.descripcion, r.fecha_creacion, u.nombre AS nombre_usuario, u.dni FROM rutina r INNER JOIN usuario u ON u.id_usuario = r.id_usuario';
+    private const SELECT_CON_PROPIETARIO = 'SELECT r.id_rutina, r.id_usuario, r.nombre_rutina, r.descripcion, r.fecha_creacion, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario, u.dni FROM rutina r INNER JOIN usuario u ON u.id_usuario = r.id_usuario';
 
     /**
      * Usuarios disponibles como propietarios (selector del formulario de admin).
@@ -39,7 +39,7 @@ final class Rutina extends Model
     public function listarUsuarios(): array
     {
         return $this->fetchAll(
-            'SELECT id_usuario, nombre, dni FROM usuario ORDER BY nombre ASC, dni ASC'
+            'SELECT id_usuario, nombre, apellido, dni FROM usuario ORDER BY nombre ASC, apellido ASC, dni ASC'
         );
     }
 

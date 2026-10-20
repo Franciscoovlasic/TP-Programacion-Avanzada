@@ -106,20 +106,61 @@ function requiereRol(string|array $roles): void
     }
 
     $_SESSION['error'] = 'No tenés permisos para acceder a esa página.';
-    header('Location: ' . rutaAplicacion('inicio.php'));
+    header('Location: ' . rutaInicioSegunRol());
     exit;
+}
+
+/**
+ * Ruta de la página principal de cada rol: el panel para ADMIN y el área
+ * personal para USUARIO. Es el único lugar que define ese destino.
+ */
+function rutaInicioSegunRol(): string
+{
+    return rutaAplicacion(
+        ($_SESSION['rol'] ?? '') === 'ADMIN' ? 'admin/index.php' : 'usuario/index.php'
+    );
 }
 
 function redirigirSegunRol(): void
 {
     requiereAutenticacion();
 
-    $destino = $_SESSION['rol'] === 'ADMIN'
-        ? rutaAplicacion('admin/index.php')
-        : rutaAplicacion('usuario/index.php');
-
-    header('Location: ' . $destino);
+    header('Location: ' . rutaInicioSegunRol());
     exit;
+}
+
+/**
+ * Une nombre y apellido para mostrarlos. Tolera apellidos vacíos o NULL
+ * (cuentas anteriores a la columna `apellido`) sin dejar espacios sobrantes.
+ */
+function nombreCompleto(?string $nombre, ?string $apellido): string
+{
+    return trim(trim((string) $nombre) . ' ' . trim((string) $apellido));
+}
+
+function nombreCompletoSesion(): string
+{
+    return nombreCompleto($_SESSION['nombre'] ?? '', $_SESSION['apellido'] ?? '');
+}
+
+/**
+ * Devuelve (y elimina de la sesión) los mensajes de error pendientes, para
+ * mostrarlos una única vez en la página a la que se redirigió.
+ *
+ * @return array<int, string>
+ */
+function consumirErroresFlash(): array
+{
+    iniciarSesionSegura();
+
+    if (!isset($_SESSION['error'])) {
+        return [];
+    }
+
+    $errores = array_map('strval', (array) $_SESSION['error']);
+    unset($_SESSION['error']);
+
+    return $errores;
 }
 
 function cerrarSesion(): void

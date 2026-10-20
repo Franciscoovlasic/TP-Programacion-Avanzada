@@ -117,6 +117,7 @@ final class AuthController extends Controller
                     $_SESSION['id_usuario'] = (int) $usuario['id_usuario'];
                     $_SESSION['dni'] = $usuario['dni'];
                     $_SESSION['nombre'] = $usuario['nombre'];
+                    $_SESSION['apellido'] = (string) ($usuario['apellido'] ?? '');
                     $_SESSION['rol'] = $usuario['rol'];
                     unset($_SESSION['error']);
 
@@ -155,6 +156,7 @@ final class AuthController extends Controller
         }
 
         $nombre = isset($_POST['nombre']) && is_string($_POST['nombre']) ? trim($_POST['nombre']) : '';
+        $apellido = isset($_POST['apellido']) && is_string($_POST['apellido']) ? trim($_POST['apellido']) : '';
         $email = isset($_POST['email']) && is_string($_POST['email']) ? trim($_POST['email']) : '';
         $dni = isset($_POST['dni']) && is_string($_POST['dni']) ? trim($_POST['dni']) : '';
         $contrasena = isset($_POST['contrasena']) && is_string($_POST['contrasena']) ? $_POST['contrasena'] : '';
@@ -162,7 +164,7 @@ final class AuthController extends Controller
             ? $_POST['confirmar_contrasena']
             : '';
 
-        if ($nombre === '' || $email === '' || $dni === '' || $contrasena === '' || $confirmacion === '') {
+        if ($nombre === '' || $apellido === '' || $email === '' || $dni === '' || $contrasena === '' || $confirmacion === '') {
             $errores[] = 'Todos los campos son obligatorios.';
         }
         if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
@@ -170,6 +172,9 @@ final class AuthController extends Controller
         }
         if ($nombre !== '' && mb_strlen($nombre, 'UTF-8') > 100) {
             $errores[] = 'El nombre no puede superar los 100 caracteres.';
+        }
+        if ($apellido !== '' && mb_strlen($apellido, 'UTF-8') > 100) {
+            $errores[] = 'El apellido no puede superar los 100 caracteres.';
         }
         if ($email !== '' && mb_strlen($email, 'UTF-8') > 100) {
             $errores[] = 'El email no puede superar los 100 caracteres.';
@@ -204,7 +209,7 @@ final class AuthController extends Controller
                 if ($errores === []) {
                     $hashPassword = password_hash($contrasena, PASSWORD_DEFAULT);
 
-                    if (!$usuario->crear($nombre, $email, $dni, $hashPassword)) {
+                    if (!$usuario->crear($nombre, $apellido, $email, $dni, $hashPassword)) {
                         $errores[] = self::MENSAJE_DUPLICADO;
                     }
                 }

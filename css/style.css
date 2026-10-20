@@ -786,3 +786,21 @@ table.dataTable.tabla-catalogo tbody td { background: transparent; }
         height: 44px;
     }
 }
+
+/* Área del administrador: pestañas Panel / Mi perfil y tarjeta de perfil.
+   Reutiliza los componentes del área del alumno (.alumno-tabs, .perfil-grid). */
+.admin-encabezado .login-title { margin-bottom: 8px; }
+.admin-encabezado .resultado-texto { text-align: left; margin-bottom: 0; }
+/* Mismo ancho en ambas pestañas (lo marca la tabla de alumnos) para que el panel no "salte" al cambiar. */
+.admin-alumnos-panel { min-width: min(100%, 1116px); }
+.admin-tabs { grid-template-columns: repeat(2, minmax(0, 340px)); }
+.admin-perfil { max-width: 760px; }
+.perfil-resumen { display: flex; align-items: center; gap: 18px; padding: 20px; margin-bottom: 28px; border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,.025); }
+.perfil-avatar { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%; background: var(--accent-btn); color: var(--text-primary); font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .04em; }
+.perfil-resumen h2 { margin: 0 0 8px; font-family: var(--font-display); font-size: 1.35rem; letter-spacing: .02em; }
+.perfil-resumen p { margin: 8px 0 0; color: var(--text-muted); font-size: .85rem; overflow-wrap: anywhere; }
+.chip-rol { display: inline-block; padding: 3px 10px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+@media (max-width: 640px) {
+    .admin-tabs { grid-template-columns: 1fr; }
+    .perfil-resumen { align-items: flex-start; }
+}

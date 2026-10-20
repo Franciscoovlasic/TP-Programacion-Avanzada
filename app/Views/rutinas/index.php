@@ -15,7 +15,7 @@ include __DIR__ . '/../../../includes/header.php';
                 <?php foreach ($rutinas as $rutina): ?>
                     <tr>
                         <td><?= e($rutina['nombre_rutina']) ?></td>
-                        <td><?= e($rutina['nombre_usuario'] . ' (' . $rutina['dni'] . ')') ?></td>
+                        <td><?= e(nombreCompleto($rutina['nombre_usuario'], $rutina['apellido_usuario'] ?? '') . ' (' . $rutina['dni'] . ')') ?></td>
                         <td><?= e($rutina['descripcion'] ?? '') ?></td>
                         <td>
                             <div class="acciones-catalogo">

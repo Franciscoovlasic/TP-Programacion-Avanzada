@@ -56,3 +56,7 @@ Credenciales iniciales para la instalación local:
 - Email: `admin@forjagym.local`
 
 El script se ejecuta por consola (no desde el navegador), crea la cuenta si no existe y no convierte automáticamente una cuenta de usuario existente en administradora. Si el DNI/email reservado ya pertenece a una cuenta normal, hay que resolver ese conflicto manualmente antes de ejecutarlo. Una vez creada la cuenta, se puede eliminar `database/crear_admin.php` del servidor si ya no se necesita.
+
+## Apellido del usuario
+
+El registro público y el perfil (alumno y administrador) trabajan con la columna `usuario.apellido`. Si todavía no existe en tu base, ejecutá `database/migrations/007_usuario_apellido.sql`; si ya la agregaste a mano, no hace falta. Las cuentas anteriores muestran solo el nombre hasta que completen el apellido desde **Mi perfil**.

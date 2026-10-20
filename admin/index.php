@@ -5,34 +5,42 @@ requiereRol('ADMIN');
 use App\Core\Database;
 
 $rutaBase = '../';
+$tituloPagina = 'FORJA GYM - Panel de administración';
+$tabActiva = 'panel';
 $mensaje = $_SESSION['mensaje'] ?? null;
 unset($_SESSION['mensaje']);
+$erroresFlash = consumirErroresFlash();
 $conexion = Database::connection();
 $alumnos = [];
 $error = null;
 try {
-    $sql = "SELECT u.id_usuario, u.nombre, u.email, u.dni, r.id_rutina, r.nombre_rutina, r.fecha_creacion
+    $sql = "SELECT u.id_usuario, u.nombre, u.apellido, u.email, u.dni, r.id_rutina, r.nombre_rutina, r.fecha_creacion
             FROM usuario u
             LEFT JOIN rutina r ON r.id_rutina = (
                 SELECT r2.id_rutina FROM rutina r2 WHERE r2.id_usuario = u.id_usuario
                 ORDER BY r2.fecha_creacion DESC, r2.id_rutina DESC LIMIT 1
             )
-            WHERE u.rol = 'USUARIO' ORDER BY u.nombre ASC";
+            WHERE u.rol = 'USUARIO' ORDER BY u.nombre ASC, u.apellido ASC";
     $resultado = $conexion->query($sql);
     if ($resultado) { $alumnos = $resultado->fetch_all(MYSQLI_ASSOC); $resultado->free(); }
 } catch (Throwable $e) { error_log($e->getMessage()); $error = 'No se pudo cargar la lista de alumnos.'; }
 include __DIR__ . '/../includes/header.php';
 ?>
 <main class="hero hero-result"><section class="catalogo-panel admin-alumnos-panel">
-    <h1 class="login-title">Panel de administración</h1>
-    <p class="resultado-texto">Alumnos y seguimiento de rutinas.</p>
+    <header class="admin-encabezado">
+        <p class="eyebrow">FORJA GYM · ADMINISTRACIÓN</p>
+        <h1 class="login-title">Panel de administración</h1>
+        <p class="resultado-texto">Alumnos y seguimiento de rutinas.</p>
+    </header>
+    <?php include __DIR__ . '/../includes/admin_tabs.php'; ?>
     <?php if ($mensaje): ?><p class="mensaje exito"><?= e($mensaje) ?></p><?php endif; ?>
+    <?php foreach ($erroresFlash as $mensajeError): ?><p class="mensaje error"><?= e($mensajeError) ?></p><?php endforeach; ?>
     <?php if ($error): ?><p class="mensaje error"><?= e($error) ?></p><?php endif; ?>
     <div class="tabla-contenedor"><table class="tabla-catalogo">
         <thead><tr><th>Alumno</th><th>Email</th><th>Última rutina activa</th><th>Fecha de creación</th><th>Editar rutina</th><th>Nueva rutina</th><th>Historial</th></tr></thead>
         <tbody><?php foreach ($alumnos as $a): ?>
         <tr>
-            <td><?= e($a['nombre']) ?></td><td><?= e($a['email']) ?></td>
+            <td><?= e(nombreCompleto($a['nombre'], $a['apellido'] ?? '')) ?></td><td><?= e($a['email']) ?></td>
             <td><?= e($a['nombre_rutina'] ?? 'Sin rutina') ?></td>
             <td><?= $a['fecha_creacion'] ? e(date('d/m/Y', strtotime($a['fecha_creacion']))) : '—' ?></td>
             <td><?php if ($a['id_rutina']): ?><a class="btn-secundario btn-sm" href="rutinas/constructor.php?id=<?= (int)$a['id_rutina'] ?>">Editar</a><?php else: ?><span>—</span><?php endif; ?></td>
@@ -41,7 +49,7 @@ include __DIR__ . '/../includes/header.php';
         </tr><?php endforeach; ?>
         <?php if (!$alumnos): ?><tr><td colspan="7">No hay alumnos registrados.</td></tr><?php endif; ?></tbody>
     </table></div>
-    <div class="admin-links"><a class="btn-primario btn-auto" href="ejercicios/index.php">Administrar ejercicios</a><a class="btn-secundario" href="../inicio.php">Volver al inicio</a></div>
+    <div class="admin-links"><a class="btn-primario btn-auto" href="ejercicios/index.php">Administrar ejercicios</a></div>
 </section></main>
 <div class="modal-overlay" id="modalHistorial" aria-hidden="true"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="historialTitulo"><button class="modal-cerrar" type="button" onclick="cerrarHistorial()" aria-label="Cerrar historial" title="Cerrar">×</button><h2 id="historialTitulo">Historial de rutinas</h2><div id="historialContenido">Cargando...</div></section></div>
 <script>

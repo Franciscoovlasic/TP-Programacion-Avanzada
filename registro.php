@@ -3,8 +3,7 @@ require_once __DIR__ . '/includes/auth.php';
 iniciarSesionSegura();
 
 if (sesionAutenticada()) {
-    header('Location: inicio.php');
-    exit;
+    redirigirSegunRol();
 }
 
 $tokenRegistro = bin2hex(random_bytes(32));
@@ -29,7 +28,12 @@ include 'includes/header.php';
 
             <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" maxlength="100" required autocomplete="name">
+                <input type="text" id="nombre" name="nombre" maxlength="100" required autocomplete="given-name">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" maxlength="100" required autocomplete="family-name">
             </div>
 
             <div class="form-group">
