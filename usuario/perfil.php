@@ -52,10 +52,11 @@ include __DIR__ . '/../includes/header.php';
             <div class="form-group"><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" maxlength="100" required value="<?= e($perfil['nombre'] ?? '') ?>"></div>
             <div class="form-group"><label for="email">Correo electrónico</label><input id="email" type="email" name="email" maxlength="100" required value="<?= e($perfil['email'] ?? '') ?>"></div>
             <div class="form-group"><label for="dni">DNI</label><input id="dni" value="<?= e($perfil['dni'] ?? '') ?>" disabled><small class="campo-ayuda">El DNI no se puede modificar desde el perfil.</small></div>
-            <div class="form-group"><label for="peso_kg">Peso (kg)</label><input id="peso_kg" type="number" name="peso_kg" min="0.1" max="500" step="0.1" placeholder="Ej. 75.5" value="<?= e($perfil['peso_kg'] ?? '') ?>"></div>
-            <div class="form-group"><label for="altura_cm">Altura (cm)</label><input id="altura_cm" type="number" name="altura_cm" min="1" max="300" step="0.1" placeholder="Ej. 175" value="<?= e($perfil['altura_cm'] ?? '') ?>"></div>
+            <div class="form-group"><label for="peso_kg">Peso (kg)</label><input id="peso_kg" type="number" data-stepper name="peso_kg" min="0.1" max="500" step="0.1" placeholder="Ej. 75.5" value="<?= e($perfil['peso_kg'] ?? '') ?>"></div>
+            <div class="form-group"><label for="altura_cm">Altura (cm)</label><input id="altura_cm" type="number" data-stepper name="altura_cm" min="1" max="300" step="0.1" placeholder="Ej. 175" value="<?= e($perfil['altura_cm'] ?? '') ?>"></div>
         </div>
         <div class="perfil-actions"><button class="btn-primario btn-auto" type="submit">Guardar cambios</button><a class="btn-secundario" href="index.php">Volver</a></div>
     </form>
 </section></main>
+<script src="<?= e($rutaBase) ?>js/stepper.js" defer></script>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

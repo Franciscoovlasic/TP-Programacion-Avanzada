@@ -21,7 +21,7 @@ include __DIR__ . '/../../../includes/header.php';
                             <div class="acciones-catalogo">
                                 <a class="btn-secundario btn-sm" href="detalle.php?id=<?= (int) $rutina['id_rutina'] ?>">Ver</a>
                                 <a class="btn-secundario btn-sm" href="editar.php?id=<?= (int) $rutina['id_rutina'] ?>">Modificar</a>
-                                <form action="eliminar.php" method="post">
+                                <form action="eliminar.php" method="post" data-confirmar="<?= e('¿Eliminar la rutina "' . $rutina['nombre_rutina'] . '"? Esta acción no se puede deshacer.') ?>">
                                     <input type="hidden" name="token" value="<?= e($token) ?>">
                                     <input type="hidden" name="id_rutina" value="<?= (int) $rutina['id_rutina'] ?>">
                                     <button class="btn-peligro btn-sm" type="submit">Eliminar</button>
@@ -36,4 +36,5 @@ include __DIR__ . '/../../../includes/header.php';
         <a class="btn-registro" href="../index.php">Volver al área ADMIN</a>
     </section>
 </main>
+<script src="<?= e($rutaBase) ?>js/confirmar.js" defer></script>
 <?php include __DIR__ . '/../../../includes/footer.php'; ?>
