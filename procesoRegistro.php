@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/auth.php';
+iniciarSesionSegura();
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Location: registro.php');
@@ -77,12 +76,13 @@ if ($errores === []) {
 
         if ($errores === []) {
             $hashPassword = password_hash($contrasena, PASSWORD_DEFAULT);
-            $insertar = $conexion->prepare('INSERT INTO usuario (nombre, email, dni, contrasenia) VALUES (?, ?, ?, ?)');
+            $rol = 'USUARIO';
+            $insertar = $conexion->prepare('INSERT INTO usuario (nombre, email, dni, contrasenia, rol) VALUES (?, ?, ?, ?, ?)');
             if ($insertar === false) {
                 throw new RuntimeException('No se pudo preparar el registro.');
             }
 
-            $insertar->bind_param('ssss', $nombre, $email, $dni, $hashPassword);
+            $insertar->bind_param('sssss', $nombre, $email, $dni, $hashPassword, $rol);
             if (!$insertar->execute()) {
                 if ($insertar->errno === 1062) {
                     $errores[] = 'El DNI o email ya se encuentra registrado.';

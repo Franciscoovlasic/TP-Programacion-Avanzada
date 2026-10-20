@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/auth.php';
+iniciarSesionSegura();
 
 $errores = [];
 $tokenInvalido = (
@@ -51,7 +50,7 @@ if ($errores === []) {
     try {
         $conexion = conectarBaseDeDatos();
         $consulta = $conexion->prepare(
-            'SELECT id_usuario, nombre, dni, contrasenia FROM usuario WHERE dni = ? LIMIT 1'
+            'SELECT id_usuario, nombre, dni, contrasenia, rol FROM usuario WHERE dni = ? LIMIT 1'
         );
 
         if ($consulta === false) {
@@ -64,23 +63,23 @@ if ($errores === []) {
             $conexion->close();
             throw new RuntimeException('No se pudo ejecutar la consulta de autenticación.');
         }
-        $consulta->bind_result($idUsuario, $nombre, $dniRegistrado, $hashPassword);
+        $consulta->bind_result($idUsuario, $nombre, $dniRegistrado, $hashPassword, $rol);
 
         $usuarioEncontrado = $consulta->fetch();
         $consulta->close();
         $conexion->close();
 
-        if (!$usuarioEncontrado || !password_verify($contrasena, $hashPassword)) {
+        if (!$usuarioEncontrado || !password_verify($contrasena, $hashPassword) || !in_array($rol, ROLES_VALIDOS, true)) {
             $errores[] = 'DNI o contraseña incorrectos.';
         } else {
             session_regenerate_id(true);
             $_SESSION['id_usuario'] = (int) $idUsuario;
             $_SESSION['dni'] = $dniRegistrado;
             $_SESSION['nombre'] = $nombre;
+            $_SESSION['rol'] = $rol;
             unset($_SESSION['error']);
 
-            header('Location: inicio.php');
-            exit;
+            redirigirSegunRol();
         }
     } catch (RuntimeException $exception) {
         error_log($exception->getMessage());

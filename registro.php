@@ -1,9 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/auth.php';
+iniciarSesionSegura();
 
-if (isset($_SESSION['id_usuario'])) {
+if (sesionAutenticada()) {
     header('Location: inicio.php');
     exit;
 }
@@ -53,7 +52,7 @@ include 'includes/header.php';
                 <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" minlength="8" maxlength="72" required autocomplete="new-password">
             </div>
 
-            <button type="submit" id="btnIngresar">Registrarme</button>
+            <button type="submit" id="btnIngresar" class="btn-primario">Registrarme</button>
         </form>
 
         <a class="btn-registro" href="index.php">Volver al inicio de sesión</a>

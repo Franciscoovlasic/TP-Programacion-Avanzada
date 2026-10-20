@@ -1,10 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (isset($_SESSION['id_usuario'])) {
-    header('Location: inicio.php');
-    exit;
+require_once __DIR__ . '/includes/auth.php';
+iniciarSesionSegura();
+if (sesionAutenticada()) {
+    redirigirSegunRol();
 }
 $token = bin2hex(random_bytes(32));
 $_SESSION['token'] = $token;
@@ -77,7 +75,7 @@ include 'includes/header.php';
 
                 <span id="msgValidacion" class="mensaje-validacion"></span>
 
-                <button type="submit" id="btnIngresar" disabled>Ingresar</button>
+                <button type="submit" id="btnIngresar" class="btn-primario" disabled>Ingresar</button>
             </form>
 
             <a class="btn-registro" href="registro.php">Crear una cuenta</a>

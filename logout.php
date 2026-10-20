@@ -1,11 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$_SESSION = [];
-session_unset();
-session_destroy();
+require_once __DIR__ . '/includes/auth.php';
+cerrarSesion();
 
 header('Location: index.php');
 exit;

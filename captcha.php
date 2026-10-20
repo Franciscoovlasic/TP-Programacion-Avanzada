@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/auth.php';
+iniciarSesionSegura();
 
 if (!isset($_SESSION['captcha_code']) || !is_string($_SESSION['captcha_code']) || $_SESSION['captcha_code'] === '') {
     http_response_code(404);

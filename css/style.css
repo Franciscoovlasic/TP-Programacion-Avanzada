@@ -295,7 +295,9 @@ a {
     margin-bottom: 8px;
 }
 
-.form-group input {
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
     background-color: transparent;
     border: none;
@@ -307,14 +309,33 @@ a {
     transition: border-color 0.2s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-bottom-color: var(--accent);
 }
 
-.form-group input:focus-visible {
+.form-group input:focus-visible,
+.form-group select:focus-visible,
+.form-group textarea:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group select option {
+    background-color: var(--bg-panel);
+    color: var(--text-primary);
+}
+
+.form-group textarea {
+    display: block;
+    resize: vertical;
+    line-height: 1.5;
 }
 
 .mensaje-validacion {
@@ -325,7 +346,7 @@ a {
     margin: -8px 0 16px;
 }
 
-button#btnIngresar {
+.btn-primario {
     width: 100%;
     padding: 13px;
     background-color: var(--accent);
@@ -340,20 +361,67 @@ button#btnIngresar {
     transition: background-color 0.2s ease;
 }
 
-button#btnIngresar:hover:not(:disabled) {
+.btn-primario:hover:not(:disabled) {
     background-color: var(--accent-hover);
 }
 
-button#btnIngresar:focus-visible {
+.btn-primario:focus-visible {
     outline: 2px solid var(--text-primary);
     outline-offset: 3px;
 }
 
-button#btnIngresar:disabled {
+.btn-primario:disabled {
     background-color: var(--bg-panel-alt);
     color: var(--text-muted);
     cursor: not-allowed;
 }
+
+.catalogo-panel {
+    width: min(100%, 1000px);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+}
+
+.tabla-contenedor { overflow-x: auto; margin: 24px 0; }
+.tabla-catalogo { width: 100%; border-collapse: collapse; text-align: left; }
+.tabla-catalogo th, .tabla-catalogo td { padding: 14px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.tabla-catalogo th { color: var(--accent); }
+.acciones-catalogo { display: flex; gap: 8px; flex-wrap: wrap; }
+.acciones-catalogo form { margin: 0; }
+
+/* DataTables: controles adaptados al tema oscuro */
+.dt-container { color: var(--text-primary); margin: 24px 0; }
+.dt-container select,
+.dt-container input[type="search"] {
+    background: var(--bg-panel-alt);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+.dt-container .dt-paging .dt-paging-button {
+    background: var(--bg-panel-alt);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+.dt-container .dt-paging .dt-paging-button:hover,
+.dt-container .dt-paging .dt-paging-button.current {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff !important;
+}
+.dt-container .dt-paging .dt-paging-button.disabled {
+    opacity: 0.4;
+}
+table.dataTable.tabla-catalogo thead th { color: var(--accent); }
+table.dataTable.tabla-catalogo tbody tr,
+table.dataTable.tabla-catalogo tbody td { background: transparent; }
+.btn-secundario, .btn-peligro { display: inline-block; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; cursor: pointer; font: inherit; }
+.btn-secundario { color: var(--text-primary); background: var(--bg-panel-alt); }
+.btn-peligro { color: var(--text-primary); background: var(--error); border-color: var(--error); }
 
 .btn-registro {
     display: block;

@@ -1,0 +1,8 @@
+<?php
+require_once __DIR__ . '/../../includes/auth.php'; require_once __DIR__ . '/../../includes/rutinas.php'; requiereRol('ADMIN');
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') { include __DIR__ . '/formulario.php'; exit; }
+$token = is_string($_POST['token'] ?? null) ? $_POST['token'] : ''; $idUsuario = filter_var($_POST['id_usuario'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]); $nombre = is_string($_POST['nombre_rutina'] ?? null) ? trim($_POST['nombre_rutina']) : ''; $descripcion = is_string($_POST['descripcion'] ?? null) ? trim($_POST['descripcion']) : '';
+$_SESSION['rutina_formulario'] = ['id' => null, 'id_usuario' => $idUsuario ?: 0, 'nombre_rutina' => $nombre, 'descripcion' => $descripcion];
+if (!validarTokenCsrf($token) || $idUsuario === false || $idUsuario === null || $nombre === '' || mb_strlen($nombre) > 100) { $_SESSION['mensaje'] = 'El propietario es obligatorio y el nombre debe tener hasta 100 caracteres.'; header('Location: formulario.php'); exit; }
+try { if (!existeUsuarioRutina((int) $idUsuario)) throw new InvalidArgumentException('El usuario propietario no existe.'); guardarRutina(null, (int) $idUsuario, $nombre, $descripcion); unset($_SESSION['rutina_formulario']); $_SESSION['mensaje'] = 'Rutina agregada correctamente.'; } catch (InvalidArgumentException $exception) { $_SESSION['mensaje'] = $exception->getMessage(); header('Location: formulario.php'); exit; } catch (RuntimeException $exception) { error_log($exception->getMessage()); $_SESSION['mensaje'] = 'No se pudo guardar la rutina. Revisá los datos e intentá nuevamente.'; }
+header('Location: index.php'); exit;
