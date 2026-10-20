@@ -1,0 +1,19 @@
+FORJA GYM - MIGRACIONES DE BASE DE DATOS
+
+Antes de ejecutar cualquier migracion:
+1. Selecciona la base de datos correcta con USE nombre_base;
+2. Realiza un backup.
+3. Revisa cuales migraciones ya ejecutaste. Las migraciones 001 a 004 son historicas y pueden fallar si ya se aplicaron (por ejemplo, al agregar una columna o crear una tabla existente).
+
+Para la funcionalidad de rutinas/dias/ejercicios:
+- La migracion 005 crea dia_rutina y dia_rutina_ejercicio solo si faltan.
+- Si dia_rutina_ejercicio ya existe sin descanso_segundos, agrega esa columna con DEFAULT 90.
+- No borra ni recrea las tablas existentes.
+- Requiere que existan las tablas rutina y ejercicio.
+
+Para el perfil del alumno:
+- La migracion 006 agrega peso_kg y altura_cm solo si faltan.
+- Las columnas quedan como NULL para no exigir esos datos a usuarios existentes.
+- No depende del orden ni de la existencia de una columna dni.
+
+Las migraciones 005 y 006 se prepararon para poder volver a ejecutarse sin duplicar estas tablas/columnas. De todos modos, haz un backup antes de modificar la base de datos y prueba primero en una copia si la base contiene cambios propios.

@@ -187,6 +187,12 @@ final class AuthController extends Controller
             $errores[] = 'Las contraseñas no coinciden.';
         }
 
+        // Identificadores reservados para la cuenta maestra de administración.
+        // El registro público nunca puede crear ni apropiarse de esta cuenta.
+        if ($dni === '99999999' || strtolower($email) === 'admin@forjagym.local') {
+            $errores[] = 'Ese DNI o email está reservado para la cuenta de administración.';
+        }
+
         if ($errores === []) {
             try {
                 $usuario = new Usuario();

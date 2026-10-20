@@ -17,7 +17,7 @@ function conectarBaseDeDatos(): mysqli
     $usuario = getenv('DB_USER') ?: 'root';
     $contrasena = getenv('DB_PASSWORD') ?: '';
     $baseDeDatos = getenv('DB_NAME') ?: 'forjagym';
-    $puerto = (int) (getenv('DB_PORT') ?: 3307);
+    $puerto = (int) (getenv('DB_PORT') ?: 3306);
 
     $conexion = new mysqli($host, $usuario, $contrasena, $baseDeDatos, $puerto);
 

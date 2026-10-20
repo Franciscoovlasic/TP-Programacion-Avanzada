@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label for="captcha">Código de verificación</label>
-                    <img src="<?= e('captcha.php') ?>" alt="CAPTCHA visual">
+                    <img class="captcha-image" src="<?= e('captcha.php?v=' . time()) ?>" alt="Código de verificación visual">
                     <input type="text" id="captcha" name="captcha" maxlength="6" autocomplete="off">
                 </div>
 

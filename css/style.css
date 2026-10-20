@@ -549,3 +549,78 @@ table.dataTable.tabla-catalogo tbody td { background: transparent; }
         font-size: 0.75rem;
     }
 }
+
+/* Panel de alumnos y constructor de rutinas: conserva la paleta original. */
+.admin-alumnos-panel { width: min(100%, 1500px); }
+.admin-alumnos-panel .tabla-catalogo { min-width: 1050px; }
+.admin-btn { display: inline-block; text-decoration: none; padding: 10px 14px; border-radius: var(--radius); font-weight: 600; }
+.admin-links, .constructor-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 24px; }
+.constructor-panel { width: min(100%, 1050px); }
+.constructor-heading, .dia-card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.constructor-heading { margin: 28px 0 14px; }
+.constructor-heading h2, .modal-card h2 { margin: 0; }
+.dia-card { background: var(--bg-panel-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin: 16px 0; }
+.dia-card-head .form-group { flex: 1; margin-bottom: 8px; }
+.ejercicio-editor { display: grid; grid-template-columns: minmax(190px,2fr) repeat(3,minmax(90px,1fr)) auto; gap: 12px; align-items: end; padding: 14px 0; border-top: 1px solid var(--border); }
+.ejercicio-editor .form-group { margin-bottom: 8px; }
+.ejercicio-editor input, .ejercicio-editor select, .dia-card input { width: 100%; min-width: 0; }
+.ejercicios-lista { margin: 16px 0 8px; }
+.modal-overlay { display: none; position: fixed; z-index: 1000; inset: 0; padding: 24px; background: rgba(0,0,0,.72); align-items: center; justify-content: center; }
+.modal-overlay.visible { display: flex; }
+.modal-card { position: relative; width: min(100%, 1050px); max-height: 85vh; overflow: auto; padding: 30px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-panel); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.modal-cerrar { position: absolute; right: 16px; top: 10px; border: 0; background: transparent; color: var(--text-primary); font-size: 30px; cursor: pointer; }
+@media (max-width: 760px) { .ejercicio-editor { grid-template-columns: 1fr 1fr; } .ejercicio-select { grid-column: 1 / -1; } .dia-card-head { align-items: flex-start; } .modal-card { padding: 22px 14px; } }
+
+
+/* Área personal del alumno: componentes nuevos adaptados a la identidad FORJA GYM. */
+.alumno-home { width: min(100%, 900px); max-width: 900px; }
+.eyebrow { color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .16em; margin-bottom: 10px; }
+.alumno-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 28px 0; }
+.alumno-tab { display:flex; align-items:center; gap:14px; padding:16px 18px; border:1px solid var(--border); border-radius:12px; text-decoration:none; color:var(--text-primary); background:rgba(255,255,255,.02); transition:border-color .2s, background .2s; }
+.alumno-tab:hover, .alumno-tab.activo { border-color:var(--accent); background:rgba(255,255,255,.045); }
+.alumno-tab strong, .alumno-tab small { display:block; }
+.alumno-tab small { color:var(--text-muted); margin-top:4px; font-size:.78rem; }
+.tab-icon { color:var(--accent); font-size:1.65rem; line-height:1; }
+.alumno-atajos, .perfil-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:24px; }
+.perfil-form { margin-top:24px; }
+.perfil-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; }
+.perfil-grid .form-group input:disabled { opacity:.58; cursor:not-allowed; }
+.campo-ayuda { display:block; color:var(--text-muted); font-size:.75rem; margin-top:7px; }
+.rutina-actual-card { border:1px solid var(--accent); border-radius:14px; padding:24px; margin:26px 0 32px; background:rgba(255,255,255,.025); }
+.rutina-card-top, .historial-heading, .historial-item, .dia-consulta-titulo { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.estado-rutina { display:inline-block; color:var(--accent); font-size:.72rem; font-weight:800; letter-spacing:.1em; }
+.rutina-fecha, .historial-item small { color:var(--text-muted); font-size:.8rem; }
+.rutina-actual-card h2 { font-family:var(--font-display); font-size:1.65rem; margin:16px 0 8px; }
+.rutina-actual-card p, .historial-item p { color:var(--text-muted); margin-bottom:18px; }
+.historial-heading { margin:24px 0 16px; }
+.historial-heading h2, .dia-consulta h2 { font-family:var(--font-display); margin:0 0 6px; }
+.historial-heading p { color:var(--text-muted); font-size:.9rem; }
+.historial-lista { display:grid; gap:10px; margin-top:14px; }
+.historial-item { border:1px solid var(--border); border-radius:10px; padding:16px; }
+.historial-item h3 { font-size:1rem; margin:0 0 6px; }
+.historial-item p { margin:0 0 6px; }
+.rutina-vacia { padding:28px 16px; border:1px dashed var(--border); border-radius:12px; text-align:center; margin:24px 0; }
+.rutina-vacia h2 { font-family:var(--font-display); margin:12px 0 8px; }
+.rutina-vacia p, .aviso-solo-lectura { color:var(--text-muted); }
+.enlace-volver { display:inline-block; margin-top:24px; color:var(--text-muted); text-decoration:none; }
+.dias-consulta { display:grid; gap:18px; margin:24px 0; }
+.dia-consulta { padding:20px; border:1px solid var(--border); border-radius:12px; }
+.dia-consulta-titulo { justify-content:flex-start; margin-bottom:18px; }
+.dia-consulta-titulo span { color:var(--accent); font-weight:800; font-size:.8rem; }
+.rutina-detalle-titulo { margin:10px 0 12px; }
+.aviso-solo-lectura { padding:14px 16px; border-left:3px solid var(--accent); background:rgba(255,255,255,.025); margin:24px 0; }
+@media (max-width: 640px) { .alumno-tabs, .perfil-grid { grid-template-columns:1fr; } .historial-heading, .historial-item { align-items:flex-start; flex-direction:column; } .rutina-card-top { align-items:flex-start; flex-direction:column; } .alumno-home { padding:28px 18px; } }
+
+
+/* CAPTCHA del formulario de acceso */
+.captcha-image {
+    display: block;
+    width: 180px;
+    max-width: 100%;
+    height: 60px;
+    object-fit: contain;
+    margin: 0 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #f5f5f5;
+}
