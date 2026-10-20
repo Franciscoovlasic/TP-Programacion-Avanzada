@@ -12,7 +12,6 @@ include __DIR__ . '/../includes/header.php';
         <p class="resultado-texto">Este es el punto de entrada protegido para la administración.</p>
         <a class="btn-registro" href="ejercicios/index.php">Administrar ejercicios</a>
         <a class="btn-registro" href="rutinas/index.php">Administrar rutinas</a>
-        <a class="btn-secundario" href="ejercicios/catalogo.php">Consultar catálogo</a>
         <a class="btn-registro" href="../inicio.php">Volver al inicio</a>
     </div>
 </main>
