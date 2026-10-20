@@ -79,8 +79,10 @@ a {
 }
 
 .brand-mark {
-    width: 150px;
-    height: 115px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
     flex-shrink: 0;
 }
 
