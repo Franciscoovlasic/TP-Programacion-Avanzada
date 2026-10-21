@@ -32,7 +32,7 @@ if (sesionAutenticada()) {
 
     <header class="site-header">
         <a href="<?= htmlspecialchars($destinoLogo, ENT_QUOTES, 'UTF-8') ?>" class="brand">
-            <img src="<?= htmlspecialchars($rutaBase . 'img/logo.png', ENT_QUOTES, 'UTF-8') ?>" alt="Logo FORJA GYM" class="brand-mark">
+            <img src="<?= htmlspecialchars($rutaBase . 'img/LOGOOO.png', ENT_QUOTES, 'UTF-8') ?>" alt="Logo FORJA GYM" class="brand-mark">
             <span class="brand-name">FORJA <strong>GYM</strong></span>
         </a>
         <?php if (sesionAutenticada()): ?>
