@@ -1,21 +1,15 @@
 <?php include __DIR__ . '/../../../includes/header.php'; ?>
 
-    <main class="hero">
+    <main class="hero hero-login">
+
+        <!-- Video decorativo de fondo: solo en el body del login (no cubre header ni footer).
+             Silenciado y en bucle para permitir el autoplay; sin controles porque no aporta contenido. -->
+        <video class="login-video" autoplay muted loop playsinline preload="auto"
+               poster="img/login-poster.jpg" aria-hidden="true" tabindex="-1">
+            <source src="Videos/gemini_generated_video_96d3787c.mp4" type="video/mp4">
+        </video>
 
         <div class="hero-content">
-            <!-- Ilustración vectorial por defecto (barra con discos).
-                 Si agregás tu propia foto en css/style.css, podés borrar
-                 este bloque <svg> completo si querés. -->
-            <div class="hero-media" aria-hidden="true">
-                <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" role="img">
-                    <rect x="60" y="112" width="360" height="16" rx="3" fill="#8B909B" opacity="0.9"/>
-                    <rect x="18" y="60" width="22" height="120" rx="6" fill="#D6472C"/>
-                    <rect x="44" y="78" width="16" height="84" rx="5" fill="#8B909B" opacity="0.85"/>
-                    <rect x="440" y="60" width="22" height="120" rx="6" fill="#D6472C"/>
-                    <rect x="420" y="78" width="16" height="84" rx="5" fill="#8B909B" opacity="0.85"/>
-                </svg>
-            </div>
-
             <h2 class="hero-title">Cada repetición forja tu progreso.</h2>
             <p class="hero-text">
                 Accedé a tu cuenta para seguir tu rutina, tus cargas y tus objetivos.
