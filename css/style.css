@@ -194,7 +194,7 @@ a {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
     gap: 48px;
-    max-width: 1100px;
+    max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     padding: 56px 40px;
@@ -707,6 +707,9 @@ table.dataTable.tabla-catalogo tbody td { background: transparent; }
 .modal-cerrar { position: absolute; right: 12px; top: 12px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid transparent; border-radius: var(--radius); background: transparent; color: var(--text-muted); font-size: 1.75rem; line-height: 1; cursor: pointer; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
 .modal-cerrar:hover { background: var(--bg-panel-alt); border-color: var(--border); color: var(--text-primary); }
 .modal-cerrar:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+/* Encabezado de "Gestionar rutinas": deja lugar al botón × absoluto del modal. */
+.modal-encabezado { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-right: 52px; margin-bottom: 20px; }
+.modal-encabezado p { margin: 6px 0 0; }
 .constructor-actions .btn-primario { width: auto; }
 .dia-card-head .btn-peligro { align-self: flex-end; margin-bottom: 8px; }
 .dia-card > .agregar-ejercicio { margin-top: 12px; }

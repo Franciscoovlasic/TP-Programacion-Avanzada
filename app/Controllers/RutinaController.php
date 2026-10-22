@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Rutina;
+use App\Models\Usuario;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -236,7 +237,7 @@ final class RutinaController extends Controller
 
         if (!validarTokenCsrf($token) || !is_int($id)) {
             $_SESSION['mensaje'] = self::MENSAJE_SOLICITUD_INVALIDA;
-            $this->redirect('index.php');
+            $this->redirect($this->destinoTrasEliminar());
         }
 
         try {
@@ -251,7 +252,60 @@ final class RutinaController extends Controller
             $_SESSION['mensaje'] = 'No se pudo eliminar la rutina en este momento.';
         }
 
-        $this->redirect('index.php');
+        $this->redirect($this->destinoTrasEliminar());
+    }
+
+    /**
+     * Fragmento HTML con las rutinas de un alumno, para la ventana "Gestionar rutinas" del panel.
+     * Lo pide admin/rutinas/historial.php por fetch. Recibe el id sin confiar en él: se valida como entero.
+     */
+    public function historialUsuario(mixed $idUsuario): void
+    {
+        $this->requiereRol('ADMIN');
+
+        header('Content-Type: text/html; charset=UTF-8');
+
+        $id = filter_var($idUsuario, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+
+        if (!is_int($id)) {
+            http_response_code(400);
+            $this->render('rutinas/historial-fragmento', ['error' => 'Alumno inválido.', 'alumno' => null, 'rutinas' => [], 'token' => tokenCsrf()]);
+            return;
+        }
+
+        try {
+            $alumno = (new Usuario())->obtener($id);
+            $rutinas = $alumno !== null && $alumno['rol'] === 'USUARIO' ? (new Rutina())->listarPorUsuario($id) : [];
+        } catch (RuntimeException $excepcion) {
+            error_log($excepcion->getMessage());
+            http_response_code(500);
+            $this->render('rutinas/historial-fragmento', ['error' => 'No se pudo cargar el historial.', 'alumno' => null, 'rutinas' => [], 'token' => tokenCsrf()]);
+            return;
+        }
+
+        if ($alumno === null || $alumno['rol'] !== 'USUARIO') {
+            http_response_code(404);
+            $this->render('rutinas/historial-fragmento', ['error' => 'No se encontró el alumno.', 'alumno' => null, 'rutinas' => [], 'token' => tokenCsrf()]);
+            return;
+        }
+
+        $this->render('rutinas/historial-fragmento', [
+            'error' => null,
+            'alumno' => $alumno,
+            'rutinas' => $rutinas,
+            'token' => tokenCsrf(),
+        ]);
+    }
+
+    /**
+     * Destino tras eliminar. Solo se acepta la clave "panel" (lista blanca); cualquier otro
+     * valor vuelve al listado de rutinas, como antes. Nunca se redirige a una URL recibida.
+     */
+    private function destinoTrasEliminar(): string
+    {
+        return $this->textoDePost('retorno') === 'panel'
+            ? rutaAplicacion('admin/index.php')
+            : 'index.php';
     }
 
     /**
@@ -317,11 +371,17 @@ final class RutinaController extends Controller
         $this->requiereRol(['USUARIO', 'ADMIN']);
 
         $id = $this->idDeGet();
+        $dias = [];
 
         try {
+            $modelo = new Rutina();
             $rutina = $id !== null
-                ? (new Rutina())->obtenerDeUsuario($id, (int) $_SESSION['id_usuario'])
+                ? $modelo->obtenerDeUsuario($id, (int) $_SESSION['id_usuario'])
                 : null;
+
+            if ($rutina !== null) {
+                $dias = $modelo->diasConEjercicios((int) $rutina['id_rutina']);
+            }
         } catch (RuntimeException $excepcion) {
             error_log($excepcion->getMessage());
             $_SESSION['mensaje'] = self::MENSAJE_CONSULTA;
@@ -337,6 +397,7 @@ final class RutinaController extends Controller
             'rutaBase' => '../',
             'usaDataTables' => false,
             'rutina' => $rutina,
+            'dias' => $dias,
         ]);
     }
 

@@ -106,6 +106,33 @@ final class Rutina extends Model
         );
     }
 
+    /**
+     * Días de una rutina, cada uno con sus ejercicios ordenados.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function diasConEjercicios(int $idRutina): array
+    {
+        $dias = $this->fetchAll(
+            'SELECT id_dia, numero_dia, nombre_dia FROM dia_rutina WHERE id_rutina = ? ORDER BY numero_dia ASC',
+            'i',
+            [$idRutina]
+        );
+
+        foreach ($dias as $indice => $dia) {
+            $dias[$indice]['ejercicios'] = $this->fetchAll(
+                'SELECT e.nombre_ejercicio, dre.series, dre.repeticiones, dre.descanso_segundos, dre.orden
+                 FROM dia_rutina_ejercicio dre
+                 INNER JOIN ejercicio e ON e.id_ejercicio = dre.id_ejercicio
+                 WHERE dre.id_dia = ? ORDER BY dre.orden ASC, e.nombre_ejercicio ASC',
+                'i',
+                [(int) $dia['id_dia']]
+            );
+        }
+
+        return $dias;
+    }
+
     public function existeUsuario(int $id): bool
     {
         return $this->fetchOne(

@@ -1,14 +1,5 @@
 <?php
-use App\Core\Database;
-$db = Database::connection();
-$dias = [];
-$stmt = $db->prepare('SELECT id_dia, numero_dia, nombre_dia FROM dia_rutina WHERE id_rutina = ? ORDER BY numero_dia ASC');
-$stmt->bind_param('i', $rutina['id_rutina']); $stmt->execute(); $res = $stmt->get_result();
-while ($dia = $res->fetch_assoc()) {
-    $ejStmt = $db->prepare('SELECT e.nombre_ejercicio, dre.series, dre.repeticiones, dre.descanso_segundos, dre.orden FROM dia_rutina_ejercicio dre INNER JOIN ejercicio e ON e.id_ejercicio = dre.id_ejercicio WHERE dre.id_dia = ? ORDER BY dre.orden ASC, e.nombre_ejercicio ASC');
-    $ejStmt->bind_param('i', $dia['id_dia']); $ejStmt->execute(); $dia['ejercicios'] = $ejStmt->get_result()->fetch_all(MYSQLI_ASSOC); $ejStmt->close(); $dias[] = $dia;
-}
-$stmt->close();
+// $dias llega desde RutinaController::verPropia() (Rutina::diasConEjercicios()).
 include __DIR__ . '/../../../includes/header.php';
 ?>
 <main class="hero hero-result"><section class="catalogo-panel alumno-home">
